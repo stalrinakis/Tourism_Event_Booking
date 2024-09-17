@@ -1,0 +1,9 @@
+.box{
+    margin: auto;
+    width: 50%;
+    border: 1px solid rgb(196, 172, 172);
+    padding: 10px;
+}
+.chng{
+    float: right;
+}

@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="CSS/Accform.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  </head>
+  <body>
+    <% if(isad == 'yes') { %>
+        <%-include("../HTML/NavAd.html") %>
+    
+        <%} else if(isad == 'no') { %>
+        <%-include("../HTML/NavUs.html") %>
+    
+        <%} else{ %>
+          <%-include("../HTML/NavUn.html") %>
+    
+        <%} %>
+        
+    <% items.forEach(function(act) { %>
+
+    <div class="container"> 
+        <h1 text-align: center;> Accomondation Booking Form</h1>
+        <img src="img/test1.jpg" class="photo"></div>
+        <form name="mainform">
+        <div class="box">
+            <form  name="topform">
+                    <div id = "frm" class="booking-form">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <span class="form-label">Check In</span>
+                                        <input type="date" required name="ddd1" id="ddd1" class="form-control"   min="2022-5-29" >
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <span class="form-label">Check out</span>
+                                        <input type="date" required name="ddd2" id="ddd2" class="form-control "   min="2022-5-29" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <span class="form-label" id="rooms">Rooms</span>
+                                        <select class="form-control">
+                                            <% for (var i = 1; i <= act.rooms; i++) {%> 
+                                                <option><%= i%></option>
+                                                <% } %> 
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <span class="form-label">Guests</span>
+                                        <select class="form-control" id="gs">
+                                            <% for (var i = 1; i <= act.guests; i++) {%> 
+                                            <option><%= i%></option>
+                                            <% } %> 
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <span class="form-label">Total days:</span>
+                                        <input type="number" name='tdays'   value ="0" id="tdays" readonly />
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <span class="form-label">Total price:</span>
+                                        <input type="number" name='cpn'   value =<%= act.price%> class="cpn" id="cpn" readonly />
+                                    </div>
+                                </div>
+                            </div>
+                            <button id="test2"  type="button" class="do-btn" style="display: block" >Go to registration Form!</button>
+                    </div>
+
+                    <div id= "test1" class="Guest-form" style="display: none">
+                        <h2> Person number</h2>
+                        <div class="Name">
+                            <label for="Fname"><b>First Name</b></label>
+                            <input type="text" placeholder="Enter First Name" name="Fname" required>
+                        
+                            <label for="Sname"><b>Surname</b></label>
+                            <input type="text" placeholder="Enter  Surname" name="Sname" required>
+                        </div>
+                        <span for="DoB"><b>Date of Birth</b></span>
+                        <input name="dob" class="form-control " type="date" required>
+                        <label for="ident"><b>Identity</b></label>
+                        <input type="text" placeholder="ID" name="id" id="id1" required>
+                    </div>
+                </form>
+
+                    <div id="form1">
+                        <form id="form_submit"  name="form_submit">
+                            <!-- Dynamic Registration Form Fields Creates Here -->
+                        </form>
+                    </div>
+
+                    
+                    <div id="final" class="final" style="display: none">
+                        <button id="end-btn"  type="button" class="end-btn" style="display: block">Register Guests!</button>
+                    </div>
+
+
+                    <div id="form2">
+                        <form id="form_submit2" name="form_submit2">
+                            <!-- Dynamic Registration Form Fields Creates Here -->
+                        </form>
+                    </div>
+
+                    <div id="formC">
+                        <form id="form_submitC" method="POST" name="form_submitC">
+                            <div id="comp" class="comp" style="display: none">
+                                <button id="comp-btn"  type="submit" class="comp-btn" style="display: block">Complete Reservation!</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    
+
+                </div>
+                <% }) %>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+
+
+ var test = new Array;
+ var firstname = new Array;
+ var surname = new Array;
+ var dob = new Array;
+ var usid = new Array;
+ var total=0;
+var checkin = 0;
+var checkout = 0;
+ var today = new Date();
+    today = new Date(today.setDate(today.getDate() + 1)).toISOString().split('T')[0];
+;
+
+
+ var date1;
+var date2;
+var difference ;
+var days=1;
+var cardtype;
+var verify;
+var cardcode;
+
+document.getElementsByName("ddd1")[0].setAttribute('min', today);
+document.getElementsByName("ddd2")[0].setAttribute('min', today);
+
+
+$(document).ready(function(){
+  $("#ddd1").change(function(){
+    document.getElementsByName("ddd2")[0].setAttribute('min',document.getElementById("ddd1").value );
+  });
+});
+
+
+$(function(){
+    $("input").attr("required", true);
+});
+
+const targetDiv = document.getElementById("test1");
+const btn = document.getElementById("test2");
+const frm = document.getElementById("frm");
+btn.onclick = function () {
+        checkout = document.getElementById("ddd2").value;
+        checkin = document.getElementById("ddd1").value;
+         if((checkin != '') && (checkout != '')){
+            $("#test2").hide();
+            $("#frm").addClass("disabledbutton");
+
+            guests_value = $('#gs option:selected').val();
+                if (guests_value == 0) {
+                    $("#form_submit").empty(); 
+                    $("#form1").css({
+                    'display': 'none'
+                    });
+                } else {
+                    $("#form_submit").empty(); 
+                    
+                    create(guests_value);
+                    
+                }
+
+
+                $("#final").show();
+        }else{
+           alert("Pick Dates!");
+        }
+    };
+
+
+
+    function create(sel_value) {
+
+
+        for (var i = 1; i <= sel_value; i++) {
+            $("div#form1").slideDown('slow');
+            $("div#form1").append($("#form_submit").append($("<div/>", {
+            id: 'head'
+            }).append($("<h2/>").text("Registration Form for Guest " + i)), 
+            $("<input/>", {
+            type: 'text',
+            placeholder: 'Name' + i,
+            name: 'Fname' + i,
+            id: "fid",
+            }),
+            $("<br/>"),
+            $("<input/>", {
+            type: 'text',
+            placeholder: 'Surname' + i,
+            name: 'Sname' + i,
+            id: "sid"
+            }), 
+            $("<br/>"), 
+            $("<input/>", {
+            type: 'date',
+            placeholder: 'DoB' + i,
+            name: 'DateOfBirth' + i,
+            id: "dobid"
+            }), 
+             $("<br/>"), 
+             $("<input/>", {
+            type: 'text',
+            placeholder: 'ID' + i,
+            name: 'ID' + i,
+            id: "usid"
+            }), 
+            $("<hr/>"), 
+            $("<br/>")))
+        }
+    }
+
+
+
+    
+
+    const subtn = document.getElementById("end-btn");
+
+  
+    $("#end-btn").click(function(){
+        var temp=[];
+
+
+
+
+       // const ttt = document.getElementById("fid");  
+        var i = 0;
+
+        $("#form1 input[id=fid]")
+            .each(function () {
+                
+        if( this.value == ""){
+            temp.push(this.value);
+        }
+         firstname[i]=(this.value);
+          i ++;
+        });
+
+        i = 0;
+        $("#form1 input[id=sid]")
+            .each(function () {
+  
+
+          if( this.value == ""){
+            temp.push(this.value);
+        }
+         surname[i]=(this.value);
+          i ++;
+        });
+
+        i = 0;
+        $("#form1 input[id=dobid]")
+            .each(function () {
+                if( this.value == ""){
+            temp.push(this.value);
+        }
+                dob[i] = (this.value);
+          i ++;
+        });
+
+        i = 0;
+        $("#form1 input[id=usid]")
+            .each(function () {
+                if( this.value == ""){
+            temp.push(this.value);
+        }
+         usid[i]=(this.value);
+          i ++;
+        });
+
+        if(temp.includes("")){
+            alert("Fill all fields");
+        }else{
+            if (i == 0) {
+                $("#form_submit2").empty(); // Resetting Form
+                $("#form2").css({
+                'display': 'none'
+                });
+            } else {
+                $("#form1").hide();
+                $("#final").hide();
+                $("#comp").show();
+                $("#form_submit2").empty(); //Resetting Form
+                // Below Function Creates Input Fields Dynamically
+                create2(i, firstname, surname, dob, usid);
+                // Appending Submit Button To Form
+            }
+
+    }
+
+
+    });
+
+    function create2(sel_value, firstname, surname, dob, usid) {
+            for (var i = 1; i <= sel_value; i++) {
+                $("div#form2").slideDown('slow');
+                $("div#form2").append($("#form_submit2").append($("<div/>", {
+                id: 'head'
+                }).append($("<h2/>").text("Information for Guest " + i)), 
+
+                $("<hr/>"), 
+                $("<br/>")))
+
+                $("div#form2").append($("#form_submit2").append($(
+                "<strong>Name: "+ firstname[i-1] +" </strong>"),
+                 $("<br/>"), 
+                $(
+                "<strong>Surname: "+ surname[i-1] + " </strong>"),
+                $("<br/>"), 
+               $(
+                "<strong>Date of Birth: "  + dob[i-1] + " </strong>"),
+                $("<br/>"), 
+                $(
+                "<strong>Identity: " + usid[i-1] + " </strong>"),
+                $("<br/>")
+                ));
+            }
+
+            
+        var radios = ['Debit', 'Credit'];
+           $("div#form2").append($("#form_submit2").append(
+                $("<hr/>"),
+                $("<h2>Total days: " +days+ " <br>  Total Cost:" + total + "  </h2>" )
+                ,                        $("<hr/>"),
+                         $("<h2>Card Type: </h2>" )
+                        ,$("<hr/>"),
+                
+                
+                
+                ));
+            for (var value of radios) {
+                    $("div#form2").append($("#form_submit2").append(
+                            $("<input/>", {
+                            type: 'radio',
+                            name: 'radio' ,
+                            id: 'radio',
+                            value: value,
+                            }),
+                            $("<label>" + value + " <label>"), 
+                            $("<br/>"),                
+                    ))};
+                    function randomNumber(min, max) { 
+                        return Math.floor(Math.random() * (max - min) + min);
+                    } 
+                    var verifi = randomNumber(10000,99999);
+
+                    $("div#form2").append($("#form_submit2").append(
+                        $("<label>Enter card's 16-digit number <label>"),
+                        $("<input/>", {
+                            type: 'text',
+                            name: 'cardid',
+                            id: 'cardid',
+                            }),
+                            $("<br/>"),
+                            $("<label>Enter :   " + verifi + "   for verificaiton <label>"),
+                        $("<input/>", {
+                            type: 'text',
+                            name: 'verid' ,
+                            placeholder: verifi,
+                            id: "verid"
+                            }),
+                            $("<br/>"),
+                     ));
+
+    }
+
+
+
+
+
+
+
+
+        var guests_value = $('#gs option:selected').val();
+        var price = $('#cpn').val();
+
+       $("#form_submitC").submit(function(e){
+                var checkCard=document.getElementById("cardid").value;
+                checkout = document.getElementById("ddd2").value;
+                checkin = document.getElementById("ddd1").value;
+                var rooms =document.getElementById("rooms").value;
+                var cardcat = document.getElementById("radio").value;
+               /* const checkCard=document.getElementById("cardid").value;
+                const ver = document.getElementById("verid").getAttribute("placeholder");
+                const ver2 = document.getElementById("verid").value;
+                var templ;
+                const cardcat=document.getElementById("value").value;
+                checkout = document.getElementById("ddd2").value;
+                checkin = document.getElementById("ddd1").value;
+                var rooms =document.getElementById("rooms").value;
+                const crypto = require("crypto");
+                var tripid = crypto.randomBytes(16).toString("hex");
+                'total': total,
+                    'days': days,
+                    'cardcat': cardcat,
+                    'cardid': checkCard,
+                    'bookid': tripid,
+                    'guests': guests_value,
+                
+                
+                */
+                if (checkCard.length != 16){
+                    alert("Wrong card number");
+                    e.preventDefault(e);
+                }else if( ver2 != ver){
+                    alert("Wrong verification code");
+                    e.preventDefault(e);
+                }else{
+                    $.post("http://127.0.0.1:8888/Accform", {
+                    'username': firstname,
+                })
+                }
+            });
+
+        $(document).ready(function(){
+            $("#gs").on("change", function () {
+                        guests_value = $('#gs option:selected').val();
+                        checkout = document.getElementById("ddd2").value;
+                        checkin = document.getElementById("ddd1").value;
+                         if((checkin != '') && (checkout != '')){
+                            date1 = new Date(checkin);
+                            date2 = new Date(checkout);
+                            difference = date2.getTime() - date1.getTime();
+                            days = Math.ceil(difference / (1000 * 3600 * 24));
+                            if(days == 0){
+                            $('#cpn').attr('value', guests_value * price);
+                            total = document.getElementById("cpn").value;
+                            }else{
+                                $('#cpn').attr('value', guests_value * price * days);
+                                total = document.getElementById("cpn").value;
+                            }
+                         }else{
+                            $('#cpn').attr('value', guests_value * price);
+                            total = document.getElementById("cpn").value;
+                         }
+            });
+
+            $("#ddd1").change(function(){
+                        checkout = document.getElementById("ddd2").value;
+                        checkin = document.getElementById("ddd1").value;
+                         if((checkin != '') && (checkout != '')){
+                        date1 = new Date(checkin);
+                        date2 = new Date(checkout);
+                        difference = date2.getTime() - date1.getTime();
+                        days = Math.ceil(difference / (1000 * 3600 * 24));
+                        if(days == 0){
+                            $('#cpn').attr('value', guests_value * price);
+                            total = document.getElementById("cpn").value;
+                        }else{
+                            $('#tdays').attr('value', days);
+                            $('#cpn').attr('value', guests_value * price * days);
+                            total = document.getElementById("cpn").value;
+                        }
+                         }
+             });
+            $("#ddd2").change(function(){
+                        checkout = document.getElementById("ddd2").value;
+                        checkin = document.getElementById("ddd1").value;
+                         if((checkin != '') && (checkout != '')){
+                        date1 = new Date(checkin);
+                        date2 = new Date(checkout);
+                        difference = date2.getTime() - date1.getTime();
+                        days = Math.ceil(difference / (1000 * 3600 * 24));
+                        if(days == 0){
+                            $('#cpn').attr('value', guests_value * price);
+                            total = document.getElementById("cpn").value;
+                        }else{
+                            $('#cpn').attr('value', guests_value * price * days);
+                            $('#tdays').attr('value', days);
+                            total = document.getElementById("cpn").value;
+                        }
+                         }
+            });
+
+
+        })
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         /*   <th class="text-center">Grand Total</th>
+                            <td class="text-center"><input type="number" name='sub_total' placeholder='0.00'
+                                    class="form-control" id="sub_total" readonly />
+        */
+
+
+
+        
+
+       /* $("#gs").on("change", function () {
+            var guests_value = $('option:selected').val();
+          
+            var sel_value = $('option:selected').val();
+            $("#cpn").val((sel_value * 5));
+        });*/
+
+
+
+
+
+
+
+/*
+
+
+
+
+    targetDiv.style.display = "block";
+
+if (targetDiv.style.display !== "none") {
+    targetDiv.style.display = "none";
+  } else {
+    targetDiv.style.display = "block";
+  }*/
+
+</script>
+
+
+
+  </body>
+</html>

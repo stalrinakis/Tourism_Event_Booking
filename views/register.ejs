@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="CSS/register.css">
+
+
+</head>
+<body>
+  <% if(isad == 'yes') { %>
+    <%-include("../HTML/NavAd.html") %>
+
+    <%} else if(isad == 'no') { %>
+    <%-include("../HTML/NavUs.html") %>
+
+    <%} else{ %>
+      <%-include("../HTML/NavUn.html") %>
+
+    <%} %>
+    
+  <% if(X != '') { %>
+    <h1 style="color: green; font-family: Arial, Helvetica, sans-serif;"><%= X %></h1>
+  <% } %>
+
+
+
+
+  <form method="POST" >
+      <div class="box">
+      <div class="form-group">
+        <label for="Fname">First Name</label>
+        <input type="text" class="form-control" name = "Fname" id="Fname" placeholder="First Name"required>
+      </div>
+      <div class="form-group">
+        <label for="Sname">Surname</label>
+        <input type="text" class="form-control" name = "Sname" id="Sname" placeholder="Surname" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" class="form-control" name = "email" id="email"  placeholder="Enter email" required>
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" class="form-control" name = "psw1" id="psw1" placeholder="Password" required>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" class="form-control" name = "psw2" id="psw2" placeholder="Password" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+
+      <div class="chng" >
+        <button type="button" class="cancelbtn" onclick="location.href='travelSug'">Cancel</button>
+        <span class="acc">Already have an account? <a href="/login">Sign in!</a></span>
+      </div>
+    </div>
+
+  </form>
+  
+
+
+
+</body>
+</html>

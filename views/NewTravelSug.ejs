@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <link rel="stylesheet" href="CSS/NewActivity.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+
+    </head>
+    <body>
+
+      <% if(isad == 'yes') { %>
+        <%-include("../HTML/NavAd.html") %>
+    
+        <%} else if(isad == 'no') { %>
+        <%-include("../HTML/NavUs.html") %>
+    
+        <%} else{ %>
+          <%-include("../HTML/NavUn.html") %>
+    
+        <%} %>
+      <% if(x != '') { %>
+        <h1 style="color: green; font-family: Arial, Helvetica, sans-serif;"><%= x %></h1>
+      <% } %>
+        <div class="container">
+            <form method="POST" enctype="multipart/form-data">
+  
+            <div class="row">
+                <div class="col-25">
+                  <label for="subject">Enter Travel suggestion's title:</label>
+                </div>
+                <div class="col-75">
+                  <textarea id="title" name="title" placeholder="Write something.."
+                    style="height:50px" required></textarea>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-25">
+                  <label for="subject">Description:</label>
+                </div>
+                <div class="col-75">
+                  <textarea id="subject" name="subj" placeholder="Write something.."
+                    style="height:100px" required></textarea>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-25">
+                  <label for="subject">Read more link:</label>
+                </div>
+                <div class="col-75">
+                  <textarea id="read" name="read" placeholder="Write something.."
+                    style="height:100px" required></textarea>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-25">
+                  <label for="subject">Map link:</label>
+                </div>
+                <div class="col-75">
+                  <textarea id="gmap" name="gmap" placeholder="Write something.."
+                    style="height:100px" required></textarea>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-25">
+                  <label for="subject">Choose main image:</label>
+                </div>
+                <div class="col-75">
+                  <input type="file" id="mainimg" name="mainimg" accept="image/*" required>
+                </div>
+              </div>
+              <div class="row">
+                <input type="submit" value="Submit">
+              </div>
+            </form>
+          </div>
+
+
+
+<script>
+  var today = new Date();
+  today = new Date(today.setDate(today.getDate() + 1)).toISOString().split('T')[0];
+  document.getElementsByName("dte")[0].setAttribute('min', today);
+
+</script>
+
+
+
+    </body>
+</html>
